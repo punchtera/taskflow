@@ -1,0 +1,46 @@
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #1a1a2e;
+  background: #f5f6fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 3rem 1.25rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e6e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+}
+
+.dot--ok { background: #21c07a; }
+.dot--down { background: #e0405a; }
+.dot--pending { background: #f2c200; }
+
+.muted { color: #6b7280; font-size: 0.9rem; }
