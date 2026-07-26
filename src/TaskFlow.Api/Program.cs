@@ -1,3 +1,6 @@
+using TaskFlow.Application;
+using TaskFlow.Application.Abstractions;
+using TaskFlow.Api.Security;
 using TaskFlow.Infrastructure;
 using TaskFlow.Infrastructure.Persistence;
 
@@ -8,8 +11,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Wire the Infrastructure layer (data store, hashing, db initializer).
+// Wire the business (Application) and Infrastructure layers.
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+// System clock; a fixed TimeProvider is substituted in unit tests.
+builder.Services.AddSingleton(TimeProvider.System);
+
+// Interim current-user accessor (targets the demo user until auth in Iteration 3).
+builder.Services.AddScoped<ICurrentUserAccessor, DemoCurrentUserAccessor>();
 
 // Allow the Vite dev server (separate origin) to call the API during development.
 const string SpaCorsPolicy = "spa";

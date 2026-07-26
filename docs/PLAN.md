@@ -38,14 +38,16 @@ Legend: ✅ done in this starter commit · ⬜ to be built in a following iterat
 
 ---
 
-## Iteration 2 — Task business logic + CRUD API ⬜
+## Iteration 2 — Task business logic + CRUD API ✅
 
 **Goal:** end-to-end task CRUD through the business layer.
 
-- ⬜ *(test first)* `TaskServiceTests` with a mocked `ITaskRepository` covering rules, not-found and ownership.
-- ⬜ Implement `TaskService` (maps DTOs ↔ entities, applies `TaskRules`, sets timestamps, returns typed `Result`).
-- ⬜ `TasksController` with GET/GET{id}/POST/PUT/DELETE mapping `Result` → HTTP status codes.
-- ⬜ *(test)* API-level tests via `WebApplicationFactory`.
+- ✅ *(test first)* `TaskServiceTests` with a mocked `ITaskRepository` covering rules, not-found, mapping, timestamps and trimming (fixed-clock `FakeTimeProvider`).
+- ✅ Implement `TaskService` (maps DTOs ↔ entities, applies `TaskRules`, sets server-owned timestamps via injected `TimeProvider`, returns typed `Result`).
+- ✅ `TasksController` with GET/GET{id}/POST/PUT/DELETE; thin controller mapping `Result.Error` → HTTP codes (400/404/409/401) with ProblemDetails; 201+Location on create, 204 on delete.
+- ✅ `ICurrentUserAccessor` abstraction; interim `DemoCurrentUserAccessor` targets the seeded demo user until auth (Iteration 3).
+- ✅ *(test)* API-level tests via `WebApplicationFactory` against a throwaway SQLite DB (list, create+roundtrip, 400, 404, update, delete).
+- ✅ `AddApplication()` DI entry point; registered `TimeProvider.System`.
 
 **Acceptance:** all task endpoints behave per the API contract with correct codes.
 

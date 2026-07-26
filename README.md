@@ -5,12 +5,14 @@ Users register, log in, and perform CRUD on their own tasks (title, description,
 status, due date). Built with **.NET 10 + Clean Architecture** (Dapper + SQLite)
 and a **React + TypeScript** SPA.
 
-> **Status:** through **Iteration 1**. Iteration 0 delivered the Clean
-> Architecture skeleton, a working `GET /api/ping` endpoint, DB seeding on
-> startup, and a React client wired to the API. Iteration 1 added the **Dapper
-> repository layer** (`UserRepository`, `TaskRepository`) with user-scoped
-> queries and unit tests against SQLite. The task business logic + CRUD API
-> (Iteration 2) and auth (Iteration 3) follow — see [`docs/PLAN.md`](docs/PLAN.md).
+> **Status:** through **Iteration 2**. Iteration 0 delivered the Clean
+> Architecture skeleton, `GET /api/ping`, DB seeding on startup, and a React
+> client wired to the API. Iteration 1 added the **Dapper repository layer**
+> (`UserRepository`, `TaskRepository`) with user-scoped queries. Iteration 2
+> added the **task business logic** (`TaskService`) and the **CRUD API**
+> (`TasksController`) with `WebApplicationFactory` integration tests. Task CRUD
+> currently runs against the seeded demo user; real authentication (Iteration 3)
+> and the React CRUD UI (Iteration 4) follow — see [`docs/PLAN.md`](docs/PLAN.md).
 
 ## Documentation
 
