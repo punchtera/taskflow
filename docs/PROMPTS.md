@@ -16,7 +16,7 @@ Part B is the mandatory GenAI section of the exercise.
 
 ### A0 · Master / system prompt (set once per session)
 
-> **Setting the stage:** You are pairing with me on a .NET 9 full-stack coding
+> **Setting the stage:** You are pairing with me on a .NET 10 full-stack coding
 > exercise called *TaskFlow* — a task manager where users register, log in and
 > perform CRUD on their own tasks (title, description, status, due date). The
 > solution follows **Clean Architecture** with four projects — `Domain`,
@@ -119,7 +119,7 @@ Part B is the mandatory GenAI section of the exercise.
 ### B.1 The prompt I would use
 
 > **Setting the stage:** You are a senior .NET engineer. Generate the scaffold for
-> a RESTful **task-management API** in **C# / ASP.NET Core (.NET 9)** following
+> a RESTful **task-management API** in **C# / ASP.NET Core (.NET 10)** following
 > **Clean Architecture** (Domain → Application → Infrastructure → Api). Persistence
 > is **SQLite via Dapper**. A basic `User` model already exists; tasks belong to a user.
 >

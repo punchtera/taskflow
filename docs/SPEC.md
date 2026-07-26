@@ -88,7 +88,7 @@ the `ITaskRepository` / `IUserRepository` interfaces defined in the Domain.
 
 | Concern | Choice | Rationale |
 |---------|--------|-----------|
-| Runtime | **.NET 9** | Requested; latest SDK. |
+| Runtime | **.NET 10** | Current LTS; matches the installed SDK. |
 | Data store | **SQLite** | Zero-install, single-file DB — a reviewer can clone and run. |
 | Data access | **Dapper** (micro-ORM) | Lighter and more explicit than EF Core; makes the hand-written repository layer and SQL visible, which suits a code review. |
 | Auth | **JWT bearer** + **BCrypt** | Standard stateless auth; BCrypt for salted password hashing. |

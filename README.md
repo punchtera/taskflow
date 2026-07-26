@@ -2,7 +2,7 @@
 
 A full-stack task manager built for the Ballast Lane .NET technical exercise.
 Users register, log in, and perform CRUD on their own tasks (title, description,
-status, due date). Built with **.NET 9 + Clean Architecture** (Dapper + SQLite)
+status, due date). Built with **.NET 10 + Clean Architecture** (Dapper + SQLite)
 and a **React + TypeScript** SPA.
 
 > **Status:** this commit is **Iteration 0 — the foundation**: the full Clean
@@ -36,12 +36,12 @@ the database only through repository interfaces defined in the Domain.
 
 ## Tech stack
 
-.NET 9 · ASP.NET Core · Dapper · SQLite · JWT + BCrypt · React 18 + TypeScript ·
+.NET 10 · ASP.NET Core · Dapper · SQLite · JWT + BCrypt · React 18 + TypeScript ·
 Vite · xUnit / Moq / FluentAssertions.
 
 ## Prerequisites
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [Node.js 18+](https://nodejs.org)
 
 ## Getting started
