@@ -1,6 +1,6 @@
 # TaskFlow
 
-A full-stack task manager built for the Ballast Lane .NET technical exercise.
+A full-stack task manager build using .NET.
 Users register, log in, and perform CRUD on their own tasks (title, description,
 status, due date). Built with **.NET 9 + Clean Architecture** (Dapper + SQLite)
 and a **React + TypeScript** SPA.
