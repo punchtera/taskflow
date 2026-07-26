@@ -5,13 +5,14 @@ Users register, log in, and perform CRUD on their own tasks (title, description,
 status, due date). Built with **.NET 10 + Clean Architecture** (Dapper + SQLite)
 and a **React + TypeScript** SPA.
 
-> **Status:** through **Iteration 3**. Iterations 0–2 delivered the Clean
-> Architecture skeleton, `GET /api/ping`, the **Dapper repository layer**, the
-> **task business logic** (`TaskService`) and the **CRUD API**. Iteration 3 adds
-> **JWT authentication**: register/login/me endpoints, BCrypt password hashing,
-> `[Authorize]`-protected task routes, and per-user ownership resolved from the
-> token claims. The React CRUD UI (Iteration 4) is next — see
-> [`docs/PLAN.md`](docs/PLAN.md).
+> **Status:** feature-complete through **Iteration 4**. Iterations 0–3 delivered
+> the Clean Architecture backend — `GET /api/ping`, the **Dapper repository
+> layer**, the **task business logic** (`TaskService`), the **CRUD API**, and
+> **JWT authentication** (register/login/me, BCrypt, `[Authorize]`-protected
+> routes, per-user ownership). Iteration 4 adds the **React SPA**: login/register,
+> a task board (create, edit, status change, delete) with the bearer token held in
+> a React context. See [`docs/PLAN.md`](docs/PLAN.md); Iteration 5 covers final
+> hardening.
 
 ## Documentation
 

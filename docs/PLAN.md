@@ -68,14 +68,15 @@ Legend: ✅ done in this starter commit · ⬜ to be built in a following iterat
 
 ---
 
-## Iteration 4 — React CRUD UI ⬜
+## Iteration 4 — React CRUD UI ✅
 
 **Goal:** the full use case in the browser.
 
-- ⬜ Auth context + login/register screens; attach bearer token in the API client.
-- ⬜ Task list/board with create, edit, status change, delete; loading & error states.
-- ⬜ Responsive styling; verify **no console warnings**.
-- ⬜ Clean component/state structure (`components/`, `hooks/`, `context/`, `api/`).
+- ✅ `AuthContext`/`useAuth` holding token + user in memory; bearer token injected centrally in `api/client.ts` (`setAuthToken`).
+- ✅ `LoginForm` with login/register toggle and inline validation/error handling.
+- ✅ Task board grouped into To do / In progress / Done columns with create, inline edit, quick status change and delete via the `useTasks` hook; loading and error (with retry) states.
+- ✅ Responsive styling (columns stack on small screens); accessible labels/roles; no `localStorage` and no console warnings.
+- ✅ Clean structure: `api/`, `components/`, `context/`, `hooks/`, `utils/`.
 
 **Acceptance:** a user can register/log in and manage tasks end-to-end.
 
