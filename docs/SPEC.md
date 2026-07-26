@@ -1,6 +1,6 @@
 # TaskFlow — Specification
 
-> Technical specification for the Ballast Lane .NET full-stack exercise.
+> Technical specification for the .NET full-stack exercise.
 > This document is written *before* the code and is the single source of truth
 > that the plan (`PLAN.md`) and prompts (`PROMPTS.md`) are derived from.
 

@@ -27,7 +27,11 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITaskRepository, TaskRepository>();
 
-        // ITokenService and the business services are registered in Iterations 2 and 3.
+        // Auth token service (Iteration 3). Settings bound from the "Jwt" section.
+        var jwtSettings = configuration.GetSection(JwtSettings.SectionName).Get<JwtSettings>()
+            ?? throw new InvalidOperationException("Missing 'Jwt' configuration section.");
+        services.AddSingleton(jwtSettings);
+        services.AddSingleton<ITokenService, JwtTokenService>();
 
         return services;
     }

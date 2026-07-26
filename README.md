@@ -5,12 +5,12 @@ Users register, log in, and perform CRUD on their own tasks (title, description,
 status, due date). Built with **.NET 10 + Clean Architecture** (Dapper + SQLite)
 and a **React + TypeScript** SPA.
 
-> **Status:** through **Iteration 1**. Iteration 0 delivered the Clean
-> Architecture skeleton, a working `GET /api/ping` endpoint, DB seeding on
-> startup, and a React client wired to the API. Iteration 1 added the **Dapper
-> repository layer** (`UserRepository`, `TaskRepository`) with user-scoped
-> queries and unit tests against SQLite. The task business logic + CRUD API
-> (Iteration 2) and auth (Iteration 3) follow — see [`docs/PLAN.md`](docs/PLAN.md).
+> **Status:** complete (Iterations 0–5). The Clean Architecture backend —
+> `GET /api/ping`, the **Dapper repository layer**, the **task business logic**
+> (`TaskService`), the **CRUD API**, and **JWT authentication** (register/login/me,
+> BCrypt, `[Authorize]`-protected routes, per-user ownership) — plus the **React
+> SPA** (login/register and a task board) and a global ProblemDetails exception
+> handler. Tested across every layer. See [`docs/PLAN.md`](docs/PLAN.md).
 
 ## Documentation
 
@@ -83,7 +83,22 @@ API then serves it via the SPA fallback endpoint (`MapFallbackToFile`), so
 |-------|----------|
 | `demo@taskflow.dev` | `Passw0rd!` |
 
-The demo user comes with a few sample tasks. (Login is enabled in Iteration 3.)
+The demo user comes with a few sample tasks. To call the protected task
+endpoints, log in first and send the returned token as `Authorization: Bearer <token>`:
+
+```bash
+# Get a token
+curl -s -X POST http://localhost:5080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"demo@taskflow.dev","password":"Passw0rd!"}'
+
+# Use it
+curl -s http://localhost:5080/api/tasks -H "Authorization: Bearer <token>"
+```
+
+In Swagger, click **Authorize** and paste the token. Note: the `Jwt:SigningKey`
+in `appsettings.json` is a development placeholder — replace it (e.g. via user
+secrets or environment variables) for anything beyond local use.
 
 ## Tests
 

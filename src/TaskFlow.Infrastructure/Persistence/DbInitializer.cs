@@ -14,8 +14,10 @@ public sealed class DbInitializer
     private readonly ISqlConnectionFactory _factory;
     private readonly IPasswordHasher _passwordHasher;
 
-    // Stable IDs so seeding is deterministic and repeatable.
-    private static readonly Guid DemoUserId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+    // Stable IDs so seeding is deterministic and repeatable. Public so the API's
+    // interim current-user accessor can target the demo account before auth
+    // (Iteration 3) is in place.
+    public static readonly Guid DemoUserId = Guid.Parse("11111111-1111-1111-1111-111111111111");
 
     public const string DemoEmail = "demo@taskflow.dev";
     public const string DemoPassword = "Passw0rd!";
