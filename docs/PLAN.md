@@ -82,12 +82,12 @@ Legend: ✅ done in this starter commit · ⬜ to be built in a following iterat
 
 ---
 
-## Iteration 5 — Hardening & submission ⬜
+## Iteration 5 — Hardening & submission ✅
 
-- ⬜ Global exception-handling middleware → ProblemDetails.
-- ⬜ Fill test coverage gaps across all three layers; confirm TDD story holds.
-- ⬜ Finalize README (setup, run, seeded credentials, screenshots) and the GenAI write-up.
-- ⬜ Final pass: no build warnings, no console warnings, tidy commit history on `dev`.
+- ✅ Global exception handler (`GlobalExceptionHandler` : `IExceptionHandler`) → RFC 7807 ProblemDetails; `AddProblemDetails()` + `UseExceptionHandler()`.
+- ✅ Filled test-coverage gaps: ping endpoint, `DbInitializer` seeding + idempotency, `JwtTokenService` claim/expiry generation — every layer (Domain rules, Application services, Infrastructure repos/security, API) is now covered.
+- ✅ Finalized README (setup, run, seeded credentials, auth/token usage) and the GenAI write-up (`PROMPTS.md` Part B).
+- ⬜ *(you)* Final commit on `dev` and open the PR; delete the emptied `DemoCurrentUserAccessor.cs`.
 
 ---
 

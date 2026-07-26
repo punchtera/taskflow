@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using TaskFlow.Application;
 using TaskFlow.Application.Abstractions;
+using TaskFlow.Api.Middleware;
 using TaskFlow.Api.Security;
 using TaskFlow.Infrastructure;
 using TaskFlow.Infrastructure.Persistence;
@@ -13,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 // --- Services (composition root) ---
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// Consistent RFC 7807 error responses, including a catch-all for unhandled exceptions.
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddSwaggerGen(options =>
 {
     // Enable the "Authorize" button so protected endpoints can be tried from Swagger.
@@ -79,6 +84,9 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod()));
 
 var app = builder.Build();
+
+// Catch-all exception handler (returns ProblemDetails, logs the detail server-side).
+app.UseExceptionHandler();
 
 // --- Create/seed the database on startup ---
 using (var scope = app.Services.CreateScope())
