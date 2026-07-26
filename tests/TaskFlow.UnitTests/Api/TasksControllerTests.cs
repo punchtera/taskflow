@@ -10,17 +10,36 @@ namespace TaskFlow.UnitTests.Api;
 
 /// <summary>
 /// Integration tests over the running API. Each test uses a fresh factory (and
-/// therefore a fresh seeded database) for isolation.
+/// therefore a fresh seeded database) for isolation, and authenticates as the
+/// seeded demo user before calling the protected task endpoints.
 /// </summary>
 public class TasksControllerTests
 {
     private static readonly JsonSerializerOptions Json = new() { PropertyNameCaseInsensitive = true };
 
+    private static async Task<HttpClient> AuthenticatedClientAsync(CustomWebApplicationFactory factory)
+    {
+        var client = factory.CreateClient();
+        await AuthTestHelper.AuthenticateAsDemoAsync(client);
+        return client;
+    }
+
+    [Fact]
+    public async Task GET_tasks_without_a_token_returns_401()
+    {
+        using var factory = new CustomWebApplicationFactory();
+        var client = factory.CreateClient(); // no auth header
+
+        var response = await client.GetAsync("/api/tasks");
+
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+    }
+
     [Fact]
     public async Task GET_tasks_returns_the_seeded_tasks()
     {
         using var factory = new CustomWebApplicationFactory();
-        var client = factory.CreateClient();
+        var client = await AuthenticatedClientAsync(factory);
 
         var response = await client.GetAsync("/api/tasks");
 
@@ -34,7 +53,7 @@ public class TasksControllerTests
     public async Task POST_task_creates_it_and_returns_201_with_location()
     {
         using var factory = new CustomWebApplicationFactory();
-        var client = factory.CreateClient();
+        var client = await AuthenticatedClientAsync(factory);
         var request = new CreateTaskRequest("Buy milk", "2%", TaskState.Todo, DateTime.UtcNow.AddDays(1));
 
         var response = await client.PostAsJsonAsync("/api/tasks", request);
@@ -46,7 +65,6 @@ public class TasksControllerTests
         created!.Id.Should().NotBeEmpty();
         created.Title.Should().Be("Buy milk");
 
-        // And it is retrievable.
         var fetched = await client.GetAsync($"/api/tasks/{created.Id}");
         fetched.StatusCode.Should().Be(HttpStatusCode.OK);
     }
@@ -55,7 +73,7 @@ public class TasksControllerTests
     public async Task POST_task_with_blank_title_returns_400()
     {
         using var factory = new CustomWebApplicationFactory();
-        var client = factory.CreateClient();
+        var client = await AuthenticatedClientAsync(factory);
         var request = new CreateTaskRequest("", null, TaskState.Todo, null);
 
         var response = await client.PostAsJsonAsync("/api/tasks", request);
@@ -67,7 +85,7 @@ public class TasksControllerTests
     public async Task GET_task_by_unknown_id_returns_404()
     {
         using var factory = new CustomWebApplicationFactory();
-        var client = factory.CreateClient();
+        var client = await AuthenticatedClientAsync(factory);
 
         var response = await client.GetAsync($"/api/tasks/{Guid.NewGuid()}");
 
@@ -78,7 +96,7 @@ public class TasksControllerTests
     public async Task PUT_then_GET_reflects_the_update()
     {
         using var factory = new CustomWebApplicationFactory();
-        var client = factory.CreateClient();
+        var client = await AuthenticatedClientAsync(factory);
         var created = await (await client.PostAsJsonAsync("/api/tasks",
             new CreateTaskRequest("Draft", null, TaskState.Todo, null)))
             .Content.ReadFromJsonAsync<TaskResponse>(Json);
@@ -96,7 +114,7 @@ public class TasksControllerTests
     public async Task DELETE_removes_the_task()
     {
         using var factory = new CustomWebApplicationFactory();
-        var client = factory.CreateClient();
+        var client = await AuthenticatedClientAsync(factory);
         var created = await (await client.PostAsJsonAsync("/api/tasks",
             new CreateTaskRequest("Temp", null, TaskState.Todo, null)))
             .Content.ReadFromJsonAsync<TaskResponse>(Json);

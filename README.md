@@ -5,14 +5,13 @@ Users register, log in, and perform CRUD on their own tasks (title, description,
 status, due date). Built with **.NET 10 + Clean Architecture** (Dapper + SQLite)
 and a **React + TypeScript** SPA.
 
-> **Status:** through **Iteration 2**. Iteration 0 delivered the Clean
-> Architecture skeleton, `GET /api/ping`, DB seeding on startup, and a React
-> client wired to the API. Iteration 1 added the **Dapper repository layer**
-> (`UserRepository`, `TaskRepository`) with user-scoped queries. Iteration 2
-> added the **task business logic** (`TaskService`) and the **CRUD API**
-> (`TasksController`) with `WebApplicationFactory` integration tests. Task CRUD
-> currently runs against the seeded demo user; real authentication (Iteration 3)
-> and the React CRUD UI (Iteration 4) follow — see [`docs/PLAN.md`](docs/PLAN.md).
+> **Status:** through **Iteration 3**. Iterations 0–2 delivered the Clean
+> Architecture skeleton, `GET /api/ping`, the **Dapper repository layer**, the
+> **task business logic** (`TaskService`) and the **CRUD API**. Iteration 3 adds
+> **JWT authentication**: register/login/me endpoints, BCrypt password hashing,
+> `[Authorize]`-protected task routes, and per-user ownership resolved from the
+> token claims. The React CRUD UI (Iteration 4) is next — see
+> [`docs/PLAN.md`](docs/PLAN.md).
 
 ## Documentation
 
@@ -85,7 +84,22 @@ API then serves it via the SPA fallback endpoint (`MapFallbackToFile`), so
 |-------|----------|
 | `demo@taskflow.dev` | `Passw0rd!` |
 
-The demo user comes with a few sample tasks. (Login is enabled in Iteration 3.)
+The demo user comes with a few sample tasks. To call the protected task
+endpoints, log in first and send the returned token as `Authorization: Bearer <token>`:
+
+```bash
+# Get a token
+curl -s -X POST http://localhost:5080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"demo@taskflow.dev","password":"Passw0rd!"}'
+
+# Use it
+curl -s http://localhost:5080/api/tasks -H "Authorization: Bearer <token>"
+```
+
+In Swagger, click **Authorize** and paste the token. Note: the `Jwt:SigningKey`
+in `appsettings.json` is a development placeholder — replace it (e.g. via user
+secrets or environment variables) for anything beyond local use.
 
 ## Tests
 

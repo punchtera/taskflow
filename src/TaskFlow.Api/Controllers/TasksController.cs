@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskFlow.Application.Abstractions;
 using TaskFlow.Application.Common;
@@ -9,9 +10,11 @@ namespace TaskFlow.Api.Controllers;
 /// <summary>
 /// CRUD API for tasks. The controller is deliberately thin: it delegates all
 /// business logic to <see cref="ITaskService"/> and maps the returned
-/// <see cref="Result"/> to HTTP status codes.
+/// <see cref="Result"/> to HTTP status codes. All routes require authentication
+/// and operate only on the caller's own tasks.
 /// </summary>
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class TasksController : ControllerBase
 {

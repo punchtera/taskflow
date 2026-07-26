@@ -11,7 +11,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddScoped<ITaskService, TaskService>();
-        // IAuthService is registered in Iteration 3.
+        services.AddScoped<IAuthService, AuthService>();
         return services;
     }
 }

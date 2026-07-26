@@ -53,15 +53,16 @@ Legend: ✅ done in this starter commit · ⬜ to be built in a following iterat
 
 ---
 
-## Iteration 3 — Auth (second API) ⬜
+## Iteration 3 — Auth (second API) ✅
 
 **Goal:** registration, login, and protected endpoints.
 
-- ⬜ *(test first)* `AuthServiceTests` — duplicate email → Conflict, bad password → Unauthorized, happy path issues a token.
-- ⬜ `JwtTokenService` in Infrastructure implementing `ITokenService`; bind `Jwt` settings.
-- ⬜ Implement `AuthService` (register hashes password; login verifies and issues JWT).
-- ⬜ `AuthController`: `register`, `login`, `me` (authorized), and confirm a non-authorized endpoint exists.
-- ⬜ Add JWT bearer authentication + `[Authorize]`; resolve the caller's `UserId` from claims and enforce it on all task routes.
+- ✅ *(test first)* `AuthServiceTests` — duplicate email → Conflict, bad/unknown password → Unauthorized, bad input → Validation, happy path issues a token.
+- ✅ `JwtTokenService` in Infrastructure implementing `ITokenService`; `JwtSettings` bound from the `Jwt` section.
+- ✅ Implement `AuthService` (register hashes password + issues JWT; login verifies and issues JWT; generic failure message avoids field-level leaks). `AuthRules` validation.
+- ✅ `AuthController`: `register` (201), `login` (200), `me` (authorized); `register`/`login`/`ping` are the non-authorized endpoints.
+- ✅ JWT bearer authentication (`MapInboundClaims=false`, raw `sub`); `[Authorize]` on `TasksController`; `HttpCurrentUserAccessor` resolves the caller's `UserId` from claims, replacing the interim demo accessor.
+- ✅ *(test)* API tests: 401 without token, register/login/me, and cross-user isolation (a new user sees none of the demo user's tasks).
 
 **Acceptance:** protected routes return 401 without a token and work with one; ownership enforced.
 

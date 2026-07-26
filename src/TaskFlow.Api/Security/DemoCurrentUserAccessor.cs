@@ -1,15 +1,5 @@
-using TaskFlow.Application.Abstractions;
-using TaskFlow.Infrastructure.Persistence;
-
-namespace TaskFlow.Api.Security;
-
-/// <summary>
-/// Interim <see cref="ICurrentUserAccessor"/> used before authentication exists
-/// (Iteration 3). It resolves to the seeded demo user so the task CRUD flow is
-/// fully exercisable end-to-end. Iteration 3 replaces this with a claims-based
-/// accessor reading the id from the JWT.
-/// </summary>
-public sealed class DemoCurrentUserAccessor : ICurrentUserAccessor
-{
-    public Guid UserId => DbInitializer.DemoUserId;
-}
+// DemoCurrentUserAccessor was the interim ICurrentUserAccessor used in Iteration 2
+// before authentication existed. Iteration 3 replaced it with HttpCurrentUserAccessor
+// (reads the user id from the JWT "sub" claim), so this type has been removed.
+//
+// This file can be safely deleted from the repository.
