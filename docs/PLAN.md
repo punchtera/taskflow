@@ -24,16 +24,17 @@ Legend: ✅ done in this starter commit · ⬜ to be built in a following iterat
 
 ---
 
-## Iteration 1 — Data-access (repository) layer ⬜
+## Iteration 1 — Data-access (repository) layer ✅
 
 **Goal:** persist and retrieve entities through Dapper.
 
-- ⬜ *(test first)* `UserRepositoryTests` and `TaskRepositoryTests` against a temp SQLite DB.
-- ⬜ Implement `UserRepository` (`GetById`, `GetByEmail`, `ExistsByEmail`, `Add`).
-- ⬜ Implement `TaskRepository` (`GetAllForUser`, `GetByIdForUser`, `Add`, `Update`, `Delete`) — every query scoped by `UserId`.
-- ⬜ Register both in `Infrastructure.DependencyInjection`.
+- ✅ *(test first)* `UserRepositoryTests` and `TaskRepositoryTests` against a temp SQLite DB (`SqliteTestDatabase`); schema extracted to `DatabaseSchema` for clean, seed-free test databases.
+- ✅ Implement `UserRepository` (`GetById`, `GetByEmail` (case-insensitive), `ExistsByEmail`, `Add`).
+- ✅ Implement `TaskRepository` (`GetAllForUser`, `GetByIdForUser`, `Add`, `Update`, `Delete`) — every query scoped by `UserId`.
+- ✅ Explicit TEXT↔Guid/DateTime mapping via `SqliteValueConverter`; parameterised SQL throughout.
+- ✅ Register both as scoped services in `Infrastructure.DependencyInjection`.
 
-**Acceptance:** repository tests green; CRUD round-trips verified against SQLite.
+**Acceptance:** repository tests green; CRUD round-trips and user-scoping verified against SQLite.
 
 ---
 

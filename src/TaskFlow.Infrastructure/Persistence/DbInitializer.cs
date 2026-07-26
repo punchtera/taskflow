@@ -30,29 +30,7 @@ public sealed class DbInitializer
     {
         using var db = _factory.Create();
 
-        db.Execute("""
-            CREATE TABLE IF NOT EXISTS Users (
-                Id            TEXT PRIMARY KEY,
-                Email         TEXT NOT NULL UNIQUE COLLATE NOCASE,
-                DisplayName   TEXT NOT NULL,
-                PasswordHash  TEXT NOT NULL,
-                CreatedAtUtc  TEXT NOT NULL
-            );
-
-            CREATE TABLE IF NOT EXISTS Tasks (
-                Id            TEXT PRIMARY KEY,
-                UserId        TEXT NOT NULL,
-                Title         TEXT NOT NULL,
-                Description   TEXT NULL,
-                Status        INTEGER NOT NULL,
-                DueDateUtc    TEXT NULL,
-                CreatedAtUtc  TEXT NOT NULL,
-                UpdatedAtUtc  TEXT NOT NULL,
-                FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
-            );
-
-            CREATE INDEX IF NOT EXISTS IX_Tasks_UserId ON Tasks(UserId);
-            """);
+        DatabaseSchema.EnsureCreated(db);
 
         Seed(db);
     }

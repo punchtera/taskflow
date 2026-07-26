@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TaskFlow.Application.Abstractions;
+using TaskFlow.Domain.Repositories;
 using TaskFlow.Infrastructure.Persistence;
+using TaskFlow.Infrastructure.Repositories;
 using TaskFlow.Infrastructure.Security;
 
 namespace TaskFlow.Infrastructure;
@@ -21,8 +23,11 @@ public static class DependencyInjection
         services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
         services.AddSingleton<DbInitializer>();
 
-        // Repositories (ITaskRepository, IUserRepository) and ITokenService are
-        // registered here as they are implemented in Iterations 2 and 3.
+        // Repository layer (Iteration 1). Scoped: one connection unit of work per request.
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITaskRepository, TaskRepository>();
+
+        // ITokenService and the business services are registered in Iterations 2 and 3.
 
         return services;
     }
