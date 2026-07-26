@@ -28,7 +28,7 @@ export default function App() {
     <main className="app">
       <h1>TaskFlow</h1>
       <p className="muted">
-        Full-stack task manager — .NET 9 Clean Architecture + React. This starter
+        Full-stack task manager — .NET 10 Clean Architecture + React. This starter
         screen verifies the frontend can reach the backend. Task CRUD and auth
         arrive in the next iterations (see docs/PLAN.md).
       </p>
